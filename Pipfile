@@ -6,8 +6,10 @@ name = "pypi"
 [packages]
 torch = "*"
 torchvision = "*"
+pydantic = "*"
 
 [dev-packages]
+pytest = "*"
 
 [requires]
 python_version = "3.8"
