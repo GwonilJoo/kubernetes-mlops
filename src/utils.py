@@ -1,4 +1,5 @@
 from enum import Enum
+from pydantic import BaseModel, BaseConfig
 
 class StrEnum(str, Enum):
     def _generate_next_value_(name, start, count, last_values):
@@ -9,3 +10,8 @@ class StrEnum(str, Enum):
 
     def __str__(self):
         return self.name
+    
+
+class DTO(BaseModel):
+    class Config(BaseConfig):
+        arbitrary_types_allowed = True
