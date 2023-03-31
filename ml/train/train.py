@@ -16,7 +16,7 @@ def train(model, data_loader, criterion, optimizer, config):
     best_acc_path = os.path.join(save_dir, "best_acc.pt")
 
     last_loss, last_acc, best_loss, best_acc = math.inf, 0, math.inf, 0
-    print('Learning started. It takes sometime.')
+    print('Learning started. It takes sometime.', flush=True)
     for epoch in range(config.epochs):
         avg_loss = 0
         count_of_data = 0
@@ -54,10 +54,10 @@ def train(model, data_loader, criterion, optimizer, config):
             best_acc = last_acc
             torch.save(model.state_dict(), best_acc_path)
 
-        print('[Epoch: {:>4}] loss = {:>.9} acc = {:>.9}'.format(epoch + 1, last_loss, last_acc))
+        print('[Epoch: {:>4}] loss = {:>.9} acc = {:>.9}'.format(epoch + 1, last_loss, last_acc), flush=True)
 
-    print('Learning Finished!')
-    print('best loss = {:>.9} best acc = {:>.9}'.format(best_loss, best_acc))
+    print('Learning Finished!', flush=True)
+    print('best loss = {:>.9} best acc = {:>.9}'.format(best_loss, best_acc), flush=True)
 
     return {
         "last_loss": {

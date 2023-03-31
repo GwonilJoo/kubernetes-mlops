@@ -8,6 +8,8 @@ torch = "*"
 torchvision = "*"
 pydantic = "*"
 pymongo = "*"
+fastapi = "*"
+uvicorn = "*"
 
 [dev-packages]
 pytest = "*"
