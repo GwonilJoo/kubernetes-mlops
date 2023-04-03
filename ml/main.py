@@ -42,7 +42,8 @@ mnist_test = dsets.MNIST(root=config.dataset_dir,
 repo = MongoRepo(config)
 
 def train_model():
-    data_loader = get_data_loader(mnist_train, config.batch_size)
+    train_data_loader = get_data_loader(mnist_train, config.batch_size)
+    test_data_loader = get_data_loader(mnist_test, config.batch_size)
     
     model = CNN().to(config.device)
     
@@ -51,23 +52,28 @@ def train_model():
 
     train_result: Dict[str, Dict[str, any]] = train(
         model, 
-        data_loader, 
+        train_data_loader, 
         criterion, 
         optimizer, 
         config,
     )
 
     for key, value in train_result.items():
-        test_acc = test(model, value["path"], mnist_test, config.device)
+        test_acc = test(model, value["path"], test_data_loader, config.device)
         train_result[key]["test_acc"] = test_acc
 
-    repo.create(
-        {
-            "experiment_id": config.experiment_id,
-            **train_result,
-        }
-    )
-    print(train_result)
+    try:
+        repo.create(
+            {
+                "experiment_id": config.experiment_id,
+                **train_result,
+            }
+        )
+        print("Success to create documents", flush=True)
+    except Exception as e:
+        print(f"Fail to create documents: {e}", flush=True)
+
+    print(train_result, flush=True)
 
 
 if __name__ == "__main__":

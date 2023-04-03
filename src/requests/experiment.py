@@ -10,12 +10,12 @@ from src.domain.experiment import Activaton, ModelType
 class ExperimentRequest(DTO):
     model: ModelType
     epochs: int
-    learngin_rate: float
+    learning_rate: float
     batch_size: int
     #activation: Activaton
     #dropout: float
     save_dir: str
-    project_id: UUID = Field(default_factory=uuid4)
+    #project_id: UUID = Field(default_factory=uuid4)
 
 
 class LastBestEnum(StrEnum):
