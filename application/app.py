@@ -16,6 +16,7 @@ from src.requests.project import ProjectRequest
 from src.requests.dataset import UploadRequest
 
 from application.controller.project import project_router
+from application.controller._class import class_router
 
 
 app = FastAPI(
@@ -33,6 +34,7 @@ app.add_middleware(
 )
 
 app.include_router(project_router, prefix="/project")
+app.include_router(class_router, prefix="/class")
 
 
 experiment_use_case = ExperimentUseCase()

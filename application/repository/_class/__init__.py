@@ -1,0 +1,1 @@
+from .mem_repo import MemRepo as ClassMemRepo

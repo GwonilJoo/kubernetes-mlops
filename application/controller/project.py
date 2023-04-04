@@ -5,10 +5,10 @@ from typing import List
 from src.domain.project import Project
 from src.use_cases.project import ProjectUseCase
 from src.requests.project import ProjectRequest
-from application.repository.project.mem_repo import MemRepo
+from application.repository.project import ProjectMemRepo
 
 
-repo = MemRepo()
+repo = ProjectMemRepo()
 project_router = APIRouter()
 project_use_case = ProjectUseCase(repo)
 
