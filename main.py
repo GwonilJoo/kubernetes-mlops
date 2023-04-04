@@ -1,5 +1,5 @@
 import uvicorn
-from src.controller.fastapi import app
+from application.app import app
 
 if __name__ == "__main__":
     uvicorn.run(
