@@ -10,6 +10,7 @@ pydantic = "*"
 pymongo = "*"
 fastapi = "*"
 uvicorn = "*"
+python-multipart = "*"
 
 [dev-packages]
 pytest = "*"

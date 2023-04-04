@@ -1,11 +1,13 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi import BackgroundTasks
-from typing import Dict, List
-import traceback
+from typing import List, Dict
+from typing_extensions import Annotated
+from uuid import uuid4, UUID
 
 from src.use_cases.experiment import ExperimentUseCase
+from src.use_cases.dataset import DatasetUseCase
 from src.requests.experiment import ExperimentRequest, ExperimentListRequest
+from src.requests.dataset import UploadRequest
 
 
 app = FastAPI(
@@ -24,6 +26,7 @@ app.add_middleware(
 
 
 experiment_use_case = ExperimentUseCase()
+dataset_use_case = DatasetUseCase()
 
 
 @app.get("/healthcheck")
@@ -40,3 +43,15 @@ async def experiment(req: List[ExperimentRequest]) -> bool:
 @app.get("/experiment/list")
 async def experiment_list(req: ExperimentListRequest):
     pass
+
+
+@app.post("/dataset/{class_id}")
+async def upload_dataset(
+    images: Annotated[
+        List[UploadFile], File(description="Multiple files as UploadFile")
+    ],
+    class_id: UUID
+) -> Dict[str, List[str]]:
+    req = UploadRequest(images=images, class_id=class_id)
+    filenames: List[str] = dataset_use_case.upload(req)
+    return {"filenames": filenames}
