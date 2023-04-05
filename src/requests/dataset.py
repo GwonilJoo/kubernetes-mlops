@@ -5,8 +5,12 @@ from typing_extensions import Annotated
 from fastapi import File, UploadFile
 
 from src.utils import DTO
+from src.domain.dataset import DatasetType
+
 
 class UploadRequest(DTO):
-    images: Annotated[List[UploadFile], File]
+    project_id: UUID = Field(default_factory=uuid4)
     class_id: UUID = Field(default_factory=uuid4)
-    #class_id: str
+    class_name: str
+    type: DatasetType
+    images: Annotated[List[UploadFile], File]

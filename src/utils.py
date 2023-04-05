@@ -9,7 +9,7 @@ class StrEnum(str, Enum):
         return self.name
 
     def __str__(self):
-        return self.name
+        return self.value
     
 
 class DTO(BaseModel):

@@ -17,6 +17,7 @@ from src.requests.dataset import UploadRequest
 
 from application.controller.project import project_router
 from application.controller._class import class_router
+from application.controller.dataset import dataset_router
 
 
 app = FastAPI(
@@ -35,10 +36,10 @@ app.add_middleware(
 
 app.include_router(project_router, prefix="/project")
 app.include_router(class_router, prefix="/class")
+app.include_router(dataset_router, prefix="/dataset")
 
 
 experiment_use_case = ExperimentUseCase()
-dataset_use_case = DatasetUseCase()
 
 
 
@@ -58,18 +59,13 @@ async def experiment_list(req: ExperimentListRequest):
     pass
 
 
-@app.post("/dataset/{class_id}")
-async def upload_dataset(
-    images: Annotated[
-        List[UploadFile], File(description="Multiple files as UploadFile")
-    ],
-    class_id: UUID
-) -> Dict[str, List[str]]:
-    req = UploadRequest(images=images, class_id=class_id)
-    filenames: List[str] = dataset_use_case.upload(req)
-    return {"filenames": filenames}
-
-
-@app.post("/project")
-async def project(req: ProjectRequest):
-    res = ProjectUseCase
+# @app.post("/dataset/{class_id}")
+# async def upload_dataset(
+#     images: Annotated[
+#         List[UploadFile], File(description="Multiple files as UploadFile")
+#     ],
+#     class_id: UUID
+# ) -> Dict[str, List[str]]:
+#     req = UploadRequest(images=images, class_id=class_id)
+#     filenames: List[str] = dataset_use_case.upload(req)
+#     return {"filenames": filenames}
