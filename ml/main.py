@@ -10,24 +10,8 @@ from model import CNN
 from train import train
 from test import test
 from repo import MongoRepo
+from config import config
 
-
-class config:
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    learning_rate = float(os.getenv("LEARNGIN_RATE", "0.001"))
-    epochs = int(os.getenv("EPOCHS", "1"))
-    batch_size = int(os.getenv("BATCH_SIZE", "100"))
-    dataset_dir = os.getenv("MNIST_DIR", '../saved/MNIST_data/')
-    experiment_id = os.getenv("EXPERIMENT_ID", "none")
-    save_dir = os.getenv("SAVE_DIR", "../saved/")
-    mongo = {
-        "HOST": os.getenv("DB_HOST", "mongo"),
-        "PORT": int(os.getenv("DB_PORT", "27017")),
-        "USERNAME": os.getenv("DB_USERNAME", "admin"),
-        "PASSWORD": os.getenv("DB_PASSWORD", "password"),
-        "DB_NAME": os.getenv("DB_NAME", "ml"),
-        "COLLECTION": os.getenv("COLLECTION", "train"),
-    }
 
 mnist_train = dsets.MNIST(root=config.dataset_dir,
                         train=True,
@@ -42,10 +26,19 @@ mnist_test = dsets.MNIST(root=config.dataset_dir,
 repo = MongoRepo(config)
 
 def train_model():
-    train_data_loader = get_data_loader(mnist_train, config.batch_size)
-    test_data_loader = get_data_loader(mnist_test, config.batch_size)
+    train_data_loader = get_data_loader(
+        dataset_dir=os.path.join(config.dataset_dir, "train"),
+        batch_size=config.batch_size
+    )
+    test_data_loader = get_data_loader(
+        dataset_dir=os.path.join(config.dataset_dir, "test"),
+        batch_size=config.batch_size
+    )
+    # train_data_loader = get_data_loader(mnist_train, config.batch_size)
+    # test_data_loader = get_data_loader(mnist_test, config.batch_size)
     
-    model = CNN().to(config.device)
+    # model = CNN().to(config.device)
+    model = torch.hub.load('pytorch/vision:v0.10.0', 'resnet18', pretrained=True)
     
     criterion = torch.nn.CrossEntropyLoss().to(config.device)    # Softmax is internally computed.
     optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)
