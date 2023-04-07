@@ -5,15 +5,11 @@ from typing_extensions import Annotated
 from uuid import uuid4, UUID
 
 from src.use_cases import (
-    ProjectUseCase,
-    DatasetUseCase,
     ExperimentUseCase
 )
 from src.use_cases.experiment import ExperimentUseCase
-from src.use_cases.dataset import DatasetUseCase
 from src.requests.experiment import ExperimentRequest, ExperimentListRequest
-from src.requests.project import ProjectRequest
-from src.requests.dataset import UploadRequest
+from src.utils import set_database
 
 from application.controller.project import project_router
 from application.controller._class import class_router
@@ -38,6 +34,7 @@ app.include_router(project_router, prefix="/project")
 app.include_router(class_router, prefix="/class")
 app.include_router(dataset_router, prefix="/dataset")
 
+set_database()
 
 experiment_use_case = ExperimentUseCase()
 

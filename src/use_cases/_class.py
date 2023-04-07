@@ -1,41 +1,41 @@
 from uuid import UUID
 from typing import List
+from sqlalchemy.orm import Session
 
-from src.domain._class import BaseClass, Class
-from src.requests._class import ClassRequest
+from src.domain._class import Class
+from src.requests._class import ClassCreate, ClassCreateMany
 from src.repository._class import IClassRepository
 
 class ClassUseCase:
     def __init__(self, repo: IClassRepository):
         self.repo = repo
 
-    def create(self, request: ClassRequest) -> List[Class]:
+    def create(self, db: Session, request: ClassCreateMany) -> List[Class]:
         for i, name in enumerate(request.names):
-            req = BaseClass(
+            req = ClassCreate(
                 index=i,
                 name=name,
                 project_id=request.project_id,
             )
-            self.repo.create(req)
+            self.repo.create(db, req)
             
-        class_list: List[Class] = self.read_by_project_id(request.project_id)
+        class_list: List[Class] = self.read_by_project_id(db, request.project_id)
         return class_list
     
-    def read_all(self) -> List[Class]:
-        class_list: List[Class] = self.repo.read_all()
+    def read_all(self, db: Session) -> List[Class]:
+        class_list: List[Class] = self.repo.read_by_filters(db)
         return class_list
     
-    def read(self, id: UUID) -> Class:
-        filters = {"id": id}
-        class_: Class = self.repo.read(filters)[0]
+    def read(self, db: Session, id: UUID) -> Class:
+        class_: Class = self.repo.read(db, id)
         return class_
     
-    def read_by_project_id(self, project_id) -> List[Class]:
+    def read_by_project_id(self, db: Session, project_id) -> List[Class]:
         filters = {"project_id": project_id}
-        class_list: List[Class] = self.repo.read(filters)
+        class_list: List[Class] = self.repo.read_by_filters(db, filters)
         return class_list
     
-    def delete(self, id: UUID) -> Class:
-        class_: Class = self.repo.read(id)
-        self.repo.delete(id)
+    def delete(self, db: Session, id: UUID) -> Class:
+        class_: Class = self.repo.read(db, id)
+        self.repo.delete(db, id)
         return class_

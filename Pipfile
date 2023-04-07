@@ -11,6 +11,7 @@ pymongo = "*"
 fastapi = "*"
 uvicorn = "*"
 python-multipart = "*"
+sqlalchemy = "*"
 
 [dev-packages]
 pytest = "*"

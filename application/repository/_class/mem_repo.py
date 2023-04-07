@@ -1,14 +1,14 @@
 from uuid import UUID, uuid4
 from typing import List, Dict, Optional
 
-from src.domain._class import BaseClass, Class
+from src.domain._class import Class
 from src.repository._class import IClassRepository
 
 class MemRepo(IClassRepository):
     def __init__(self):
         self.data: List[Class] = []
     
-    def create(self, req: BaseClass) -> UUID:
+    def create(self, req: Class) -> UUID:
         class_ = Class(
             id=uuid4(),
             **req.dict()

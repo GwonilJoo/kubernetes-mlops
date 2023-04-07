@@ -1,13 +1,10 @@
-from fastapi import File, UploadFile
-from typing_extensions import Annotated
 from typing import List
 import shutil
 import os
-from uuid import uuid4, UUID
+from sqlalchemy.orm import Session
 
-from src.domain._class import Class
-from src.requests.dataset import UploadRequest
-from src.domain.dataset import CreateDataset, Dataset
+from src.requests.dataset import CreateDatasetMany, CreateDataset
+from src.domain.dataset import Dataset
 from src.repository.dataset import IDatasetRepository
 
 class DatasetUseCase:
@@ -15,7 +12,7 @@ class DatasetUseCase:
         self.repo = repo
         self.root = './saved'
 
-    def upload(self, req: UploadRequest) -> List[Dataset]:
+    def upload(self, db: Session, req: CreateDatasetMany) -> List[Dataset]:
         dir = os.path.join(self.root, str(req.project_id), req.type, str(req.class_name))
         if not os.path.exists(dir):
             os.makedirs(dir)
@@ -32,7 +29,7 @@ class DatasetUseCase:
                 class_id=req.class_id,
                 type=req.type
             )
-            id = self.repo.create(data)
-            res.append(self.repo.read(id))
+            dataset = self.repo.create(db, data)
+            res.append(self.repo.read(db, dataset.id))
         
         return res

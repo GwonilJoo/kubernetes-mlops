@@ -1,9 +1,10 @@
 from abc import ABCMeta, abstractmethod
 from uuid import UUID
 from typing import List
+from sqlalchemy.orm import Session
 
 from src.domain.project import Project
-from src.requests.project import ProjectRequest
+from src.requests.project import ProjectCreate
 
 
 class IProjectRepository(metaclass=ABCMeta):
@@ -12,18 +13,18 @@ class IProjectRepository(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def create(self, project: ProjectRequest) -> UUID:
+    def create(self, db: Session, project: ProjectCreate) -> Project:
         pass
 
     @abstractmethod
-    def read_all(self) -> List[Project]:
+    def read_all(self, db: Session) -> List[Project]:
         pass
 
     @abstractmethod
-    def read(self, id: UUID) -> Project:
+    def read(self, db: Session, id: UUID) -> Project:
         pass
 
     @abstractmethod
-    def delete(self, id: UUID) -> Project:
+    def delete(self, db: Session, id: UUID) -> Project:
         pass
     

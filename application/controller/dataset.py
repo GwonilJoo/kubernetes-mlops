@@ -1,37 +1,43 @@
-from fastapi import APIRouter, File, UploadFile
-from uuid import UUID, uuid4
+from fastapi import APIRouter, File, UploadFile, Depends
+from uuid import UUID
 from typing import List
 from typing_extensions import Annotated
+from sqlalchemy.orm import Session
 
 from src.domain._class import Class
-from src.domain.dataset import Dataset, DatasetType
+from src.domain import dataset as models
 from src.use_cases.dataset import DatasetUseCase
-from src.requests.dataset import UploadRequest
-from application.repository.dataset import DatasetMemRepo
+from src.requests import dataset as schemas
+from application.repository.dataset import DatasetMariadb
 from application.controller._class import class_use_case
+from src.utils import get_db
+from settings import Base, engine
+
+
+models.Base.metadata.create_all(bind=engine)
 
 dataset_router = APIRouter()
-repo = DatasetMemRepo()
+repo = DatasetMariadb()
 dataset_use_case = DatasetUseCase(repo)
 
 
 @dataset_router.post("/")
 async def create(
-    class_id: UUID, 
-    type: DatasetType, 
-    images: Annotated[List[UploadFile], File]) -> List[Dataset]:
-    #class_: Class = class_use_case.read(class_id)
+        class_id: UUID, 
+        type: schemas.DatasetType, 
+        images: Annotated[List[UploadFile], File],
+        db: Session = Depends(get_db)
+    ) -> List[schemas.Dataset]:
+    class_: Class = class_use_case.read(db, class_id)
 
-    req = UploadRequest(
-        #project_id=class_.project_id,
-        project_id=uuid4(),
+    req = schemas.CreateDatasetMany(
+        project_id=class_.project_id,
         class_id=class_id,
-        class_name="dog",
-        #class_name=class_.name,
+        class_name=class_.name,
         type=type,
         images=images
     )
-    dataset_list: List[Dataset] = dataset_use_case.upload(req)
+    dataset_list: List[models.Dataset] = dataset_use_case.upload(db, req)
     return dataset_list
 
 # @dataset_router.get("/")

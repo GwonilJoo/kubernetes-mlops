@@ -1,20 +1,14 @@
-from pydantic import Field
 from uuid import uuid4, UUID
-from enum import auto
+from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy.dialects.postgresql import UUID
 
-from src.utils import DTO, StrEnum
-
-
-class DatasetType(StrEnum):
-    TRAIN = "train"
-    TEST = "test"
+from settings import Base
 
 
-class CreateDataset(DTO):
-    path: str
-    class_id: UUID = Field(default_factory=uuid4)
-    type: DatasetType
+class Dataset(Base):
+    __tablename__ = "dataset"
 
-
-class Dataset(CreateDataset):
-    id: UUID = Field(default_factory=uuid4)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    type = Column(String(50))
+    path = Column(String(255))
+    class_id = Column(UUID(as_uuid=True), ForeignKey("class.id", ondelete="CASCADE"))

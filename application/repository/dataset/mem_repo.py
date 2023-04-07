@@ -1,7 +1,8 @@
 from uuid import UUID, uuid4
 from typing import List, Dict, Optional
 
-from src.domain.dataset import CreateDataset, Dataset
+from src.domain.dataset import Dataset
+from src.requests.dataset import CreateDataset
 from src.repository.dataset import IDatasetRepository
 
 class MemRepo(IDatasetRepository):

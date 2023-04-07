@@ -1,14 +1,14 @@
-from pydantic import Field
-from uuid import uuid4, UUID
+from uuid import uuid4
+from sqlalchemy import Column, String, Integer, ForeignKey
+from sqlalchemy.dialects.postgresql import UUID
 
-from src.utils import DTO
-
-
-class BaseClass(DTO):
-    index: int
-    name: str
-    project_id: UUID = Field(default_factory=uuid4)
+from settings import Base
 
 
-class Class(BaseClass):
-    id: UUID = Field(default_factory=uuid4)
+class Class(Base):
+    __tablename__ = "class"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    index = Column(Integer)
+    name = Column(String(255))
+    project_id = Column(UUID(as_uuid=True), ForeignKey("project.id", ondelete="CASCADE"))

@@ -1,9 +1,10 @@
 from abc import ABCMeta, abstractmethod
 from uuid import UUID
 from typing import List, Dict, Optional
+from sqlalchemy.orm import Session
 
-from src.domain.dataset import Dataset, CreateDataset
-from src.requests.dataset import UploadRequest
+from src.domain.dataset import Dataset
+from src.requests.dataset import CreateDataset
 
 
 class IDatasetRepository(metaclass=ABCMeta):
@@ -12,17 +13,17 @@ class IDatasetRepository(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def create(self, req: CreateDataset) -> UUID:
+    def create(self, db: Session, req: CreateDataset) -> Dataset:
         pass
 
     @abstractmethod
-    def read(self, id: UUID) -> Optional[Dataset]:
+    def read(self, db: Session, id: UUID) -> Optional[Dataset]:
         pass
 
     @abstractmethod
-    def read_by_filters(self, filters: Optional[Dict[str, any]]) -> List[Dataset]:
+    def read_by_filters(self, db: Session, filters: Optional[Dict[str, any]]) -> List[Dataset]:
         pass
 
     @abstractmethod
-    def delete(self, id: UUID) -> Dataset:
+    def delete(self, db: Session, id: UUID) -> Dataset:
         pass

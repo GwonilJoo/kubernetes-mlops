@@ -1,9 +1,10 @@
 from abc import ABCMeta, abstractmethod
 from uuid import UUID
-from typing import List, Dict
+from typing import List, Dict, Optional
+from sqlalchemy.orm import Session
 
 from src.domain._class import Class
-from src.requests._class import ClassRequest
+from src.requests._class import ClassCreate
 
 
 class IClassRepository(metaclass=ABCMeta):
@@ -12,18 +13,18 @@ class IClassRepository(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def create(self, req: ClassRequest) -> UUID:
+    def create(self, db: Session, req: ClassCreate) -> Class:
         pass
 
     @abstractmethod
-    def read_all(self) -> List[Class]:
+    def read(self, db: Session, id: UUID) -> Optional[Class]:
         pass
 
     @abstractmethod
-    def read(self, filters: Dict[str, any]) -> Class:
+    def read_by_filters(self, db: Session, filters: Dict[str, any] = {}) -> List[Class]:
         pass
 
     @abstractmethod
-    def delete(self, id: UUID) -> Class:
+    def delete(self, db: Session, id: UUID) -> Class:
         pass
     
