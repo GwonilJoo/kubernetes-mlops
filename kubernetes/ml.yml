@@ -26,8 +26,8 @@ spec:
               value: "27017"
             - name: SAVE_DIR
               value: "/saved"
-            - name: MNIST_DIR
-              value: "/saved/MNIST_data/"
+            - name: DATASET_DIR
+              value: "/saved/365b58ad-d470-44f1-901e-00982d825f57/"
             - name: PYTHONUNBUFFERED
               value: "0"
           volumeMounts:

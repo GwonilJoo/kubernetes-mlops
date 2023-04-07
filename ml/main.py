@@ -13,15 +13,15 @@ from repo import MongoRepo
 from config import config
 
 
-mnist_train = dsets.MNIST(root=config.dataset_dir,
-                        train=True,
-                        transform=transforms.ToTensor(),
-                        download=True)
+# mnist_train = dsets.MNIST(root=config.dataset_dir,
+#                         train=True,
+#                         transform=transforms.ToTensor(),
+#                         download=True)
 
-mnist_test = dsets.MNIST(root=config.dataset_dir,
-                        train=False,
-                        transform=transforms.ToTensor(),
-                        download=True)
+# mnist_test = dsets.MNIST(root=config.dataset_dir,
+#                         train=False,
+#                         transform=transforms.ToTensor(),
+#                         download=True)
 
 repo = MongoRepo(config)
 
