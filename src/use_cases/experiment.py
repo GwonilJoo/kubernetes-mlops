@@ -37,7 +37,7 @@ spec:
             - name: SAVE_DIR
               value: "/saved/models/%s/"
             - name: DATASET_DIR
-              value: "/saved/%s/"
+              value: "/saved/dataset/%s/"
             - name: PYTHONUNBUFFERED
               value: "0"
           volumeMounts:

@@ -39,7 +39,7 @@ async def create(
     )
     dataset_list: List[models.Dataset] = dataset_use_case.upload(db, req)
     return dataset_list
-
+1
 # @dataset_router.get("/")
 # async def read(project_id: UUID) -> List[Dataset]:
 #     class_list: List[Class] = class_use_case.read_by_project_id(project_id)
@@ -54,7 +54,7 @@ async def create(
 #     return project
 
 
-# @dataset_router.delete("/{class_id}")
-# async def delete(project_id: UUID) -> Project:
-#     project: Project = project_use_case.delete(project_id)
-#     return project
+@dataset_router.delete("/{id}")
+async def delete(id: UUID, db: Session = Depends(get_db)) -> schemas.Dataset:
+    dataset: models.Dataset = dataset_use_case.delete(db, id)
+    return dataset
