@@ -50,3 +50,60 @@ spec:
   selector:
     app: ml
     tier: mongo
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb
+  labels:
+    app: ml
+spec:
+  selector:
+    matchLabels:
+      app: ml
+      tier: mariadb
+  template:
+    metadata:
+      labels:
+        app: ml
+        tier: mariadb
+    spec:
+      containers:
+        - image: mariadb
+          name: mariadb
+          ports:
+            - containerPort: 3306
+              name: mariadb
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "1234"
+            - name: MYSQL_DATABASE
+              value: dev
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mariadb
+  labels:
+    app: ml
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: ml
+    tier: mariadb
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mariadb-np
+spec:
+  type: NodePort
+  ports:
+    - port: 3306
+      protocol: TCP
+      nodePort: 31001
+  selector:
+    app: ml
+    tier: mariadb

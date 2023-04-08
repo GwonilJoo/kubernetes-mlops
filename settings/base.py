@@ -19,11 +19,17 @@ class Settings(BaseSettings):
     MONGO_DB = os.getenv("MONGO_DB", "mlops")
 
     # MariaDB
-    SQLALCHEMY_DATABASE_URL = "mysql+pymysql://root:1234@0.0.0.0:3306/dev"
+    MARIA_HOST = os.getenv("MARIADB", "localhost")
+    MARIA_PORT = os.getenv("MARIA_PORT", "3306")
+    MARIA_USER = os.getenv("MARIA_USER", "root")
+    MARIA_PWD = os.getenv("MARIA_PWD", "1234")
+    MARIA_DB = os.getenv("MARIA_DB", "dev")
+    SQLALCHEMY_DATABASE_URL = "mysql+pymysql://root:1234@0.0.0.0:31001/dev"
 
 
 settings = Settings()
 
+SQLALCHEMY_DATABASE_URL = f"mysql+pymysql://{settings.MARIA_USER}:{settings.MARIA_PWD}@{settings.MARIA_HOST}:{settings.MARIA_PORT}/{settings.MARIA_DB}"
 ENGINE = create_engine(
     settings.SQLALCHEMY_DATABASE_URL
 )
