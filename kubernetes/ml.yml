@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ml-train
+spec:
+  template:
+    spec:
+      containers:
+        - name: ml
+          image: gwonil/ml:latest
+          resources:
+            requests:
+              memory: "6000Mi"
+            limits:
+              memory: "6000Mi"
+          env:
+            - name: EPOCHS
+              value: "10"
+            - name: BATCH_SIZE
+              value: "10"
+            - name: EXPERIMENT_ID
+              value: "exp"
+            - name: DB_HOST
+              value: "mongo"
+            - name: DB_PORT
+              value: "27017"
+            - name: SAVE_DIR
+              value: "/saved"
+            - name: DATASET_DIR
+              value: "/saved/365b58ad-d470-44f1-901e-00982d825f57/"
+            - name: PYTHONUNBUFFERED
+              value: "0"
+          volumeMounts:
+            - name: varlog
+              mountPath: "/saved"
+      volumes:
+        - name: varlog
+          hostPath:
+            path: "/Users/gwonil/Documents/kubernetes-mlops/saved"
+      restartPolicy: Never
+  backoffLimit: 0
