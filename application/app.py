@@ -24,10 +24,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(project_router, prefix="/project")
-app.include_router(class_router, prefix="/class")
-app.include_router(dataset_router, prefix="/dataset")
-app.include_router(experiment_router, prefix="/experiment")
+app.include_router(project_router, prefix="/project", tags=["project"])
+app.include_router(class_router, prefix="/class", tags=["class"])
+app.include_router(dataset_router, prefix="/dataset", tags=["dataset"])
+app.include_router(experiment_router, prefix="/experiment", tags=["experiment"])
 
 set_database()
 
