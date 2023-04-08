@@ -4,9 +4,9 @@ from sqlalchemy.orm import Session
 
 from src.domain import project as models
 from src.requests import project as schemas
-from src.repository.project import IProjectRepository
+from src.repository.project.interface import IProjectRepository
 
-class Mariadb(IProjectRepository):
+class MariaDB(IProjectRepository):
     def __init__(self):
         self.data: List[models.Project] = []
     

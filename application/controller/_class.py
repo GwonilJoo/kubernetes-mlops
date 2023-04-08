@@ -6,13 +6,13 @@ from sqlalchemy.orm import Session
 from src.domain import _class as models
 from src.use_cases._class import ClassUseCase
 from src.requests import _class as schemas
-from application.repository._class import ClassMariadb
+from src.repository._class import ClassMariaDB
 from src.utils import get_db
 from settings import Base, engine
 
 models.Base.metadata.create_all(bind=engine)
 
-repo = ClassMariadb()
+repo = ClassMariaDB()
 class_router = APIRouter()
 class_use_case = ClassUseCase(repo)
 

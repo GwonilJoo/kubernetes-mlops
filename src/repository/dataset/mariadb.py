@@ -4,9 +4,9 @@ from sqlalchemy.orm import Session
 
 from src.domain import dataset as models
 from src.requests import dataset as schemas
-from src.repository.dataset import IDatasetRepository
+from src.repository.dataset.interface import IDatasetRepository
 
-class Mariadb(IDatasetRepository):
+class MariaDB(IDatasetRepository):
     def __init__(self):
         pass
     

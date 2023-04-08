@@ -3,11 +3,12 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from src.utils import set_database
 
-from application.controller.project import project_router
-from application.controller._class import class_router
-from application.controller.dataset import dataset_router
-from application.controller.experiment import experiment_router
-
+from application.controller import (
+    project_router,
+    class_router,
+    dataset_router,
+    experiment_router
+)
 
 app = FastAPI(
           title="Hubble AI API Scheduling Server",

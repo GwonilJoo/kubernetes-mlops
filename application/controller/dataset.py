@@ -8,7 +8,7 @@ from src.domain._class import Class
 from src.domain import dataset as models
 from src.use_cases.dataset import DatasetUseCase
 from src.requests import dataset as schemas
-from application.repository.dataset import DatasetMariadb
+from src.repository.dataset import DatasetMariaDB
 from application.controller._class import class_use_case
 from src.utils import get_db
 from settings import Base, engine
@@ -17,7 +17,7 @@ from settings import Base, engine
 models.Base.metadata.create_all(bind=engine)
 
 dataset_router = APIRouter()
-repo = DatasetMariadb()
+repo = DatasetMariaDB()
 dataset_use_case = DatasetUseCase(repo)
 
 

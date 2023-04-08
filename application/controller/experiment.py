@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from src.domain import experiment as models
 from src.use_cases.experiment import ExperimentUseCase
 from src.requests import experiment as schemas
-from application.repository.experiment import ExperimentMongoDB
+from src.repository.experiment import ExperimentMongoDB
 from application.controller._class import class_use_case
 from src.utils import get_db
 

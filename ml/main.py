@@ -14,8 +14,10 @@ from test import test
 from repo import MongoRepo
 from config import config
 
-
 repo = MongoRepo(config)
+models = {
+    "resnet18": Resnet18
+}
 
 def train_model():
     experiment_id = ObjectId()
@@ -29,7 +31,7 @@ def train_model():
         batch_size=config.batch_size
     )
 
-    model = Resnet18(config.num_classes)
+    model = models[config.model](config.num_classes)
     
     criterion = torch.nn.CrossEntropyLoss().to(config.device)    # Softmax is internally computed.
     optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)

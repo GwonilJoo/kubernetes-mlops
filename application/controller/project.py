@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from src.domain import project as models
 from src.use_cases.project import ProjectUseCase
 from src.requests import project as schemas
-from application.repository.project import ProjectMariadb
+from src.repository.project import ProjectMariaDB
 from src.utils import get_db
 from settings import Base, engine
 from application.controller.experiment import experiment_use_case
@@ -14,7 +14,7 @@ from application.controller.experiment import experiment_use_case
 
 models.Base.metadata.create_all(bind=engine)
 
-repo = ProjectMariadb()
+repo = ProjectMariaDB()
 project_router = APIRouter()
 project_use_case = ProjectUseCase(repo)
 

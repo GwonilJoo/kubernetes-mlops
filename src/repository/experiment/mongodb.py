@@ -5,7 +5,7 @@ from bson import ObjectId
 
 from src.domain import experiment as models
 from src.requests import experiment as schemas
-from src.repository.experiment import IExperimentRepository
+from src.repository.experiment.interface import IExperimentRepository
 
 
 class MongoDB(IExperimentRepository):

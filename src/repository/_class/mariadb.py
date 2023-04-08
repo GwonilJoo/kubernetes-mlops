@@ -4,9 +4,9 @@ from sqlalchemy.orm import Session
 
 from src.domain import _class as models
 from src.requests import _class as schemas
-from src.repository._class import IClassRepository
+from src.repository._class.interface import IClassRepository
 
-class Mariadb(IClassRepository):
+class MariaDB(IClassRepository):
     def __init__(self):
         pass
     
