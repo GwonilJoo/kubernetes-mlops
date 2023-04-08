@@ -25,5 +25,5 @@ class IDatasetRepository(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def delete(self, db: Session, id: UUID) -> Dataset:
+    def delete(self, db: Session, id: UUID) -> None:
         pass

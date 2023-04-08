@@ -1,26 +1,12 @@
-from pydantic import Field, BaseModel
+from uuid import UUID
 from enum import auto
-from uuid import uuid4, UUID
-from typing import Optional
+from bson import ObjectId
+from typing import Union
 
-from src.utils import (
-    StrEnum, DTO
-)
+from src.utils import DTO, StrEnum
 
 
-class ModelType(StrEnum):
-    SimpleCNN = auto()
-
-
-class Activaton(StrEnum):
-    SOFTMAX = auto()
-    RELU = auto()
-    TANH = auto()
-    SIGMOID = auto()
-    LINEAR = auto()
-
-
-class ValuePath(BaseModel):
+class ValuePath(DTO):
     value: float
     test_acc: float
     path: str
@@ -33,13 +19,26 @@ class Result(DTO):
     best_acc = ValuePath
 
 
+class ValuePath(DTO):
+    _id: ObjectId    
+    value: float
+    test_acc: float
+    path: str
+
+
+class Result(DTO):
+    _id: ObjectId
+    best_loss: ValuePath
+    best_acc: ValuePath
+    last_loss: ValuePath
+    last_acc: ValuePath
+
+
 class Experiment(DTO):
-    id: UUID = Field(default_factory=uuid4)
-    model: ModelType
+    _id: ObjectId
+    model: str
     epochs: int
-    learngin_rate: float
+    learning_rate: float
     batch_size: int
-    #activation: Activaton
-    #dropout: float
     result: Result
-    project_id: UUID = Field(default_factory=uuid4)
+    project_id: UUID

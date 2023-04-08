@@ -9,6 +9,8 @@ from src.requests import project as schemas
 from application.repository.project import ProjectMariadb
 from src.utils import get_db
 from settings import Base, engine
+from application.controller.experiment import experiment_use_case
+
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -35,4 +37,5 @@ async def read(project_id: UUID, db: Session = Depends(get_db)) -> schemas.Proje
 @project_router.delete("/{project_id}")
 async def delete(project_id: UUID, db: Session = Depends(get_db)) -> schemas.Project:
     project: models.Project = project_use_case.delete(db, project_id)
+    experiment_use_case.delete_by_project_id(project_id)
     return project

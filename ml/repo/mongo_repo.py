@@ -9,6 +9,7 @@ class MongoRepo:
             port=config.mongo["PORT"],
             # username=config.mongo["USERNAME"],
             # password=config.mongo["PASSWORD"],
+            uuidRepresentation='standard'
         )
         self.db = self.client[config.mongo["DB_NAME"]]
         self.collection = self.db[config.mongo["COLLECTION"]]

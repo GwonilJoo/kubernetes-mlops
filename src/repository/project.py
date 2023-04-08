@@ -25,6 +25,6 @@ class IProjectRepository(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def delete(self, db: Session, id: UUID) -> Project:
+    def delete(self, db: Session, id: UUID) -> None:
         pass
     

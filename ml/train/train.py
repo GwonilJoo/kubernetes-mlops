@@ -1,12 +1,13 @@
 import math
 import torch
 import os
+from config import config
 
 
-def train(model, data_loader, criterion, optimizer, config):
+def train(model, data_loader, criterion, optimizer, config: config, experiment_id):
     total_batch = len(data_loader)
 
-    save_dir = os.path.join(config.save_dir, config.experiment_id)
+    save_dir = os.path.join(config.save_dir, str(experiment_id))
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
         os.chmod(save_dir, 0o777)

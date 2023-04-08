@@ -25,6 +25,6 @@ class IClassRepository(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def delete(self, db: Session, id: UUID) -> Class:
+    def delete(self, db: Session, id: UUID) -> None:
         pass
     

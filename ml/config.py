@@ -10,13 +10,13 @@ class config:
     batch_size = int(os.getenv("BATCH_SIZE", "100"))
     #dataset_dir = os.getenv("MNIST_DIR", '../saved/MNIST_data/')
     dataset_dir = os.getenv("DATASET_DIR", '../saved/MNIST_data/')
-    experiment_id = os.getenv("EXPERIMENT_ID", "none")
+    project_id = os.getenv("PROJECT_ID", "none")
     save_dir = os.getenv("SAVE_DIR", "../saved/")
     mongo = {
         "HOST": os.getenv("DB_HOST", "mongo"),
         "PORT": int(os.getenv("DB_PORT", "27017")),
         "USERNAME": os.getenv("DB_USERNAME", "admin"),
         "PASSWORD": os.getenv("DB_PASSWORD", "password"),
-        "DB_NAME": os.getenv("DB_NAME", "ml"),
-        "COLLECTION": os.getenv("COLLECTION", "train"),
+        "DB_NAME": os.getenv("DB_NAME", "mlops"),
+        "COLLECTION": os.getenv("COLLECTION", "experiment"),
     }
