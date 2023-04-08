@@ -11,7 +11,7 @@ JOB_TEMPLATE = \
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: %s-epoch-%02d-lr-%.3f-bs-%03d
+  name: model-%s-epoch-%02d-lr-%.3f-bs-%03d
 spec:
   template:
     spec:
@@ -22,11 +22,15 @@ spec:
             requests:
               memory: "6000Mi"
           env:
+            - name: MODEL
+              value: "%s"
             - name: LEARNING_RATE
               value: "%s"
             - name: EPOCHS
               value: "%s"
             - name: BATCH_SIZE
+              value: "%s"
+            - name: NUM_CLASSES
               value: "%s"
             - name: DB_HOST
               value: "mongo"
@@ -57,18 +61,25 @@ class ExperimentUseCase:
         self.JOB_TEMPLATE = JOB_TEMPLATE
         self.repo = repo
 
-    def start_experiment(self, req: List[ExperimentCreate], project_id: UUID) -> bool:
+    def start_experiment(
+            self, 
+            req: List[ExperimentCreate], 
+            project_id: UUID,
+            num_classes: int
+        ) -> bool:
         try:
-            
             for exp in req:
+                project_id
                 args = [
                     str(exp.model),
                     exp.epochs,
                     exp.learning_rate,
                     exp.batch_size,
+                    str(exp.model),
                     str(exp.learning_rate),
                     str(exp.epochs),
                     str(exp.batch_size),
+                    str(num_classes),
                     str(project_id),
                     str(project_id),
                     str(project_id),

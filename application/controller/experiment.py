@@ -7,6 +7,8 @@ from src.domain import experiment as models
 from src.use_cases.experiment import ExperimentUseCase
 from src.requests import experiment as schemas
 from application.repository.experiment import ExperimentMongoDB
+from application.controller._class import class_use_case
+from src.utils import get_db
 
 
 repo = ExperimentMongoDB()
@@ -16,9 +18,12 @@ experiment_use_case = ExperimentUseCase(repo)
 @experiment_router.post("/{project_id}")
 async def start_experiment(
     exp_list: List[schemas.ExperimentCreate], 
-    project_id: UUID
+    project_id: UUID,
+    db: Session = Depends(get_db)
 ) -> bool:
-    res = experiment_use_case.start_experiment(exp_list, project_id)
+    class_list = class_use_case.read_by_project_id(db, project_id)
+    num_classes = len(class_list)
+    res = experiment_use_case.start_experiment(exp_list, project_id, num_classes)
     return res
 
 @experiment_router.get("/{project_id}")

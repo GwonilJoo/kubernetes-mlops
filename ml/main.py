@@ -8,7 +8,7 @@ from bson import ObjectId
 from uuid import UUID
 
 from data_loader import get_data_loader
-from model import CNN
+from model import Resnet18
 from train import train
 from test import test
 from repo import MongoRepo
@@ -29,7 +29,7 @@ def train_model():
         batch_size=config.batch_size
     )
 
-    model = torch.hub.load('pytorch/vision:v0.10.0', 'resnet18', pretrained=True)
+    model = Resnet18(config.num_classes)
     
     criterion = torch.nn.CrossEntropyLoss().to(config.device)    # Softmax is internally computed.
     optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)
