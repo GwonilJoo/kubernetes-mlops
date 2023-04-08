@@ -10,6 +10,13 @@ kubernetest를 활용해서 classification 모델의 hyperparameter 실험을 �
 
 ## Setup
 
+### 실행 환경
+```
+macos M2
+docker
+kubernetes (docker desktop)
+```
+
 ### database pod 및 service
 
 ```
