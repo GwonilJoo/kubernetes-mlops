@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.utils import set_database
+from application.utils import set_database
 
 from application.controller import (
     project_router,
@@ -11,9 +11,9 @@ from application.controller import (
 )
 
 app = FastAPI(
-          title="Hubble AI API Scheduling Server",
-          description="Hubble AI Scheduling Server",
-          version="0.2.0",
+          title="AI API Scheduling Server",
+          description="Schedule training using kubernetes",
+          version="1.0.0",
       )
 
 app.add_middleware(

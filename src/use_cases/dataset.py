@@ -7,11 +7,12 @@ from uuid import UUID
 from src.requests.dataset import CreateDatasetMany, CreateDataset
 from src.domain.dataset import Dataset
 from src.repository.dataset import IDatasetRepository
+from settings import Settings
 
 class DatasetUseCase:
-    def __init__(self, repo: IDatasetRepository):
+    def __init__(self, repo: IDatasetRepository, settings: Settings):
         self.repo = repo
-        self.dataset_dir = './saved/dataset'
+        self.dataset_dir = settings.DATASET_DIR
 
     def upload(self, db: Session, req: CreateDatasetMany) -> List[Dataset]:
         dir = os.path.join(self.dataset_dir, str(req.project_id), req.type, str(req.class_name))

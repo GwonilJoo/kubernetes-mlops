@@ -7,16 +7,14 @@ from src.domain import project as models
 from src.use_cases.project import ProjectUseCase
 from src.requests import project as schemas
 from src.repository.project import ProjectMariaDB
-from src.utils import get_db
-from settings import Base, engine
+from application.utils import get_db
 from application.controller.experiment import experiment_use_case
+from settings import settings
 
-
-models.Base.metadata.create_all(bind=engine)
 
 repo = ProjectMariaDB()
 project_router = APIRouter()
-project_use_case = ProjectUseCase(repo)
+project_use_case = ProjectUseCase(repo, settings)
 
 
 @project_router.post("")

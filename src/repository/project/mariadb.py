@@ -6,6 +6,7 @@ from src.domain import project as models
 from src.requests import project as schemas
 from src.repository.project.interface import IProjectRepository
 
+
 class MariaDB(IProjectRepository):
     def __init__(self):
         self.data: List[models.Project] = []

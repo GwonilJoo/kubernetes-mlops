@@ -8,10 +8,11 @@ from src.domain._class import Class
 from src.requests._class import ClassCreate, ClassCreateMany
 from src.requests.dataset import DatasetType
 from src.repository._class import IClassRepository
+from settings import Settings
 
 class ClassUseCase:
-    def __init__(self, repo: IClassRepository):
-        self.dataset_dir = "./saved/dataset"
+    def __init__(self, repo: IClassRepository, settings: Settings):
+        self.dataset_dir = settings.DATASET_DIR
         self.repo = repo
 
     def create(self, db: Session, request: ClassCreateMany) -> List[Class]:

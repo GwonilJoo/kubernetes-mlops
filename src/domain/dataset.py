@@ -1,11 +1,9 @@
 from uuid import uuid4, UUID
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
+from settings import BASE
 
-from settings import Base
-
-
-class Dataset(Base):
+class Dataset(BASE):
     __tablename__ = "dataset"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)

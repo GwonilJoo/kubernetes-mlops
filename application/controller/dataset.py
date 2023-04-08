@@ -10,15 +10,13 @@ from src.use_cases.dataset import DatasetUseCase
 from src.requests import dataset as schemas
 from src.repository.dataset import DatasetMariaDB
 from application.controller._class import class_use_case
-from src.utils import get_db
-from settings import Base, engine
+from application.utils import get_db 
+from settings import settings
 
-
-models.Base.metadata.create_all(bind=engine)
 
 dataset_router = APIRouter()
 repo = DatasetMariaDB()
-dataset_use_case = DatasetUseCase(repo)
+dataset_use_case = DatasetUseCase(repo, settings)
 
 
 @dataset_router.post("/")

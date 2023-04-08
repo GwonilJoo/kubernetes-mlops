@@ -7,11 +7,12 @@ import shutil
 from src.domain.project import Project
 from src.requests.project import ProjectCreate
 from src.repository.project import IProjectRepository
+from settings import Settings
 
 class ProjectUseCase:
-    def __init__(self, repo: IProjectRepository):
-        self.model_dir = "./saved/models"
-        self.dataset_dir = "./saved/dataset"
+    def __init__(self, repo: IProjectRepository, settings: Settings):
+        self.model_dir = settings.MODEL_DIR
+        self.dataset_dir = settings.DATASET_DIR
         self.repo = repo
 
     def create(self, db: Session, req: ProjectCreate) -> Project:

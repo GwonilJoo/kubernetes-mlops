@@ -7,14 +7,13 @@ from src.domain import _class as models
 from src.use_cases._class import ClassUseCase
 from src.requests import _class as schemas
 from src.repository._class import ClassMariaDB
-from src.utils import get_db
-from settings import Base, engine
+from application.utils import get_db
+from settings import settings
 
-models.Base.metadata.create_all(bind=engine)
 
 repo = ClassMariaDB()
 class_router = APIRouter()
-class_use_case = ClassUseCase(repo)
+class_use_case = ClassUseCase(repo, settings)
 
 
 @class_router.post("")

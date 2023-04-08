@@ -4,7 +4,6 @@ from pymongo import MongoClient
 from bson import ObjectId
 
 from src.domain import experiment as models
-from src.requests import experiment as schemas
 from src.repository.experiment.interface import IExperimentRepository
 
 

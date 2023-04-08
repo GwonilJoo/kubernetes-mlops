@@ -8,7 +8,7 @@ from src.use_cases.experiment import ExperimentUseCase
 from src.requests import experiment as schemas
 from src.repository.experiment import ExperimentMongoDB
 from application.controller._class import class_use_case
-from src.utils import get_db
+from application.utils import get_db
 
 
 repo = ExperimentMongoDB()

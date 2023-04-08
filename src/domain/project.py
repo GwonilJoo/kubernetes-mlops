@@ -2,11 +2,10 @@ from pydantic import Field
 from uuid import uuid4, UUID
 from sqlalchemy import Column, String
 from sqlalchemy.dialects.postgresql import UUID
+from settings import BASE
 
-from settings import Base
 
-
-class Project(Base):
+class Project(BASE):
     __tablename__ = "project"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)

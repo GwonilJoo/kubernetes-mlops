@@ -1,9 +1,7 @@
 from uuid import UUID
-from enum import auto
 from bson import ObjectId
-from typing import Union
 
-from src.utils import DTO, StrEnum
+from src.utils import DTO
 
 
 class ValuePath(DTO):
